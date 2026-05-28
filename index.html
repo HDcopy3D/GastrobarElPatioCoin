@@ -1667,12 +1667,14 @@
     revealElements.forEach(el => revealObserver.observe(el));
 
     // ============================================
-    // SMOOTH SCROLL FOR NAV LINKS
+    // SMOOTH SCROLL FOR NAV LINKS (solo navegación)
     // ============================================
-    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+    document.querySelectorAll('.navbar-links a[href^="#"]').forEach(anchor => {
       anchor.addEventListener('click', function(e) {
         e.preventDefault();
-        const target = document.querySelector(this.getAttribute('href'));
+        const href = this.getAttribute('href');
+        if (!href || !href.startsWith('#')) return;
+        const target = document.querySelector(href);
         if (target) {
           const navHeight = navbar.offsetHeight;
           const targetPos = target.offsetTop - navHeight;
