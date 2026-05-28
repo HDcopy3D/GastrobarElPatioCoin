@@ -1685,7 +1685,7 @@
     // GOOGLE SHEETS DYNAMIC MENU LINKS
     // ============================================
     // ID de la hoja de cálculo de configuración
-    const SHEET_ID = '1KJvl8INa6SR462FLCM-oP3AqWMJnASG6oH4fIxOlbwQ';
+    const SHEET_ID = '1H_uQXfvYDSvtgDZLXQHSEmn3XQOU3odE';
     const SHEET_NAME = 'Cartas';
 
     // Mapa de filas en la hoja a IDs de botones en el HTML
@@ -1833,15 +1833,23 @@
         
         if (lines.length < 2) throw new Error('Hoja vacía o sin datos');
         
-        // Procesar cada fila de datos (saltamos la cabecera)
-        for (let i = 1; i < lines.length; i++) {
+        // Procesar cada fila, buscando filas de datos válidas
+        // Una fila de datos válida tiene: número en col A, nombre en col B, idioma en col C, enlace en col D
+        for (let i = 0; i < lines.length; i++) {
           const cols = parseCSVLine(lines[i]);
           
-          // Columnas: A=num, B=Tipo de Carta, C=Idioma, D=Enlace, E=Activo
-          const nombre = cols[1] || '';
-          const idioma = cols[2] || '';
-          const enlace = cols[3] || '';
-          const activo = (cols[4] || 'SÍ').toUpperCase();
+          // Columnas: A=num/orden, B=Tipo de Carta, C=Idioma, D=Enlace, E=Activo
+          const colA = (cols[0] || '').trim();
+          const nombre = (cols[1] || '').trim();
+          const idioma = (cols[2] || '').trim();
+          const enlace = (cols[3] || '').trim();
+          const activo = (cols[4] || 'SÍ').toUpperCase().trim();
+          
+          // Identificar filas de datos: deben tener nombre de carta e idioma
+          // Saltamos filas decorativas, cabeceras e instrucciones
+          if (!nombre || !idioma) continue;
+          if (nombre === 'Tipo de Carta' || nombre === 'EL PATIO' || nombre.startsWith('⚠')) continue;
+          if (!/^(ES|EN|ING|ENG)$/i.test(idioma)) continue;
           
           // Identificar qué carta es
           const key = identifyMenuKey(nombre, idioma);
