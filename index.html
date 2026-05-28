@@ -1,0 +1,1888 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>El Patio Gastro Bar — Hotel Albaicín, Coín, Málaga</title>
+  <meta name="description" content="El Patio Gastro Bar. Cocina de temporada, fresca y llena de sabor en el corazón de Coín, Málaga. Dentro del Hotel Albaicín.">
+  <link rel="icon" href="00%20-%20LOGO.png" type="image/png">
+  
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Lato:wght@300;400;700&family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400;1,600&display=swap" rel="stylesheet">
+  
+  <style>
+    /* ============================================
+       CSS CUSTOM PROPERTIES — BRAND IDENTITY
+       ============================================ */
+    :root {
+      --brand-blue: #345793;
+      --brand-blue-dark: #243d6b;
+      --brand-blue-light: #4a7bc7;
+      --brand-gold: #d4a574;
+      --brand-gold-light: #f0d0a0;
+      --brand-gold-dark: #b08050;
+      --brand-terracotta: #c4653a;
+      --brand-cream: #f5f0e8;
+      --brand-white: #faf8f4;
+      --brand-dark: #1a1a2e;
+      --brand-text: #2c2c3a;
+      --brand-text-light: #6b6b7b;
+      --font-display: 'Cormorant Garamond', 'Playfair Display', Georgia, serif;
+      --font-heading: 'Playfair Display', Georgia, serif;
+      --font-body: 'Lato', 'Helvetica Neue', Arial, sans-serif;
+    }
+
+    /* ============================================
+       RESET & BASE
+       ============================================ */
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; font-size: 16px; }
+    body {
+      font-family: var(--font-body);
+      color: var(--brand-text);
+      background: var(--brand-cream);
+      overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
+    }
+    img { max-width: 100%; height: auto; }
+    a { text-decoration: none; color: inherit; transition: color 0.3s ease; }
+
+    /* ============================================
+       NAVIGATION
+       ============================================ */
+    .navbar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 1000;
+      padding: 1rem 2rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    .navbar.scrolled {
+      background: rgba(245, 240, 232, 0.95);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      box-shadow: 0 2px 30px rgba(52, 87, 147, 0.1);
+      padding: 0.6rem 2rem;
+    }
+    .navbar-logo {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+    .navbar-logo img {
+      height: 50px;
+      width: auto;
+      transition: height 0.4s ease;
+    }
+    .navbar.scrolled .navbar-logo img { height: 38px; }
+    .navbar-links {
+      display: flex;
+      align-items: center;
+      gap: 2rem;
+      list-style: none;
+    }
+    .navbar-links a {
+      font-family: var(--font-body);
+      font-size: 0.85rem;
+      font-weight: 400;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--brand-blue);
+      position: relative;
+      padding: 0.3rem 0;
+    }
+    .navbar-links a::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 0;
+      height: 1.5px;
+      background: var(--brand-gold);
+      transition: width 0.3s ease;
+    }
+    .navbar-links a:hover::after { width: 100%; }
+    .navbar-links a:hover { color: var(--brand-gold-dark); }
+
+    .hamburger {
+      display: none;
+      flex-direction: column;
+      gap: 5px;
+      cursor: pointer;
+      z-index: 1001;
+      background: none;
+      border: none;
+      padding: 0.5rem;
+    }
+    .hamburger span {
+      width: 28px;
+      height: 2px;
+      background: var(--brand-blue);
+      transition: all 0.3s ease;
+      display: block;
+    }
+    .hamburger.active span:nth-child(1) { transform: rotate(45deg) translate(5px, 5px); }
+    .hamburger.active span:nth-child(2) { opacity: 0; }
+    .hamburger.active span:nth-child(3) { transform: rotate(-45deg) translate(5px, -5px); }
+
+    /* ============================================
+       HERO SECTION WITH 3D CANVAS
+       ============================================ */
+    .hero {
+      position: relative;
+      width: 100%;
+      height: 100vh;
+      min-height: 600px;
+      overflow: hidden;
+      background: linear-gradient(180deg, var(--brand-dark) 0%, #1e2a4a 50%, var(--brand-blue-dark) 100%);
+    }
+    .hero canvas {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+    }
+    .hero-overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      z-index: 10;
+      pointer-events: none;
+      background: radial-gradient(ellipse at center, transparent 30%, rgba(26,26,46,0.4) 100%);
+    }
+    .hero-content {
+      text-align: center;
+      color: #fff;
+      animation: fadeInUp 1.5s ease-out;
+    }
+    .hero-logo {
+      width: 180px;
+      height: auto;
+      margin-bottom: 1.5rem;
+      filter: brightness(0) invert(1);
+      animation: fadeInUp 1.5s ease-out 0.2s both;
+    }
+    .hero-tagline {
+      font-family: var(--font-display);
+      font-size: clamp(1.1rem, 2.5vw, 1.6rem);
+      font-weight: 400;
+      font-style: italic;
+      color: var(--brand-gold-light);
+      letter-spacing: 0.05em;
+      animation: fadeInUp 1.5s ease-out 0.4s both;
+    }
+    .hero-location {
+      font-family: var(--font-body);
+      font-size: clamp(0.7rem, 1.2vw, 0.85rem);
+      font-weight: 300;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.7);
+      margin-top: 1rem;
+      animation: fadeInUp 1.5s ease-out 0.6s both;
+    }
+    .hero-scroll-indicator {
+      position: absolute;
+      bottom: 2rem;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 10;
+      pointer-events: auto;
+      cursor: pointer;
+      animation: bounce 2s infinite;
+    }
+    .hero-scroll-indicator span {
+      display: block;
+      width: 24px;
+      height: 24px;
+      border-right: 2px solid var(--brand-gold);
+      border-bottom: 2px solid var(--brand-gold);
+      transform: rotate(45deg);
+      opacity: 0.7;
+    }
+
+    /* ============================================
+       SECTION COMMONS
+       ============================================ */
+    section {
+      padding: clamp(4rem, 8vw, 8rem) clamp(1.5rem, 5vw, 6rem);
+    }
+    .section-header {
+      text-align: center;
+      margin-bottom: 3rem;
+    }
+    .section-header h2 {
+      font-family: var(--font-heading);
+      font-size: clamp(2rem, 4vw, 3rem);
+      color: var(--brand-blue);
+      font-weight: 600;
+      margin-bottom: 0.5rem;
+    }
+    .section-header .ornament {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 1rem;
+      margin-top: 1rem;
+    }
+    .section-header .ornament::before,
+    .section-header .ornament::after {
+      content: '';
+      width: 60px;
+      height: 1px;
+      background: var(--brand-gold);
+    }
+    .section-header .ornament span {
+      color: var(--brand-gold);
+      font-size: 1.2rem;
+    }
+    .section-header p {
+      font-family: var(--font-body);
+      font-size: 1rem;
+      color: var(--brand-text-light);
+      max-width: 600px;
+      margin: 1rem auto 0;
+      line-height: 1.7;
+    }
+
+    /* ============================================
+       ABOUT SECTION
+       ============================================ */
+    .about {
+      background: var(--brand-white);
+      position: relative;
+    }
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+      align-items: center;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    .about-text blockquote {
+      font-family: var(--font-display);
+      font-size: clamp(1.1rem, 2vw, 1.35rem);
+      line-height: 1.8;
+      color: var(--brand-blue);
+      font-style: italic;
+      position: relative;
+      padding-left: 2rem;
+      border-left: 3px solid var(--brand-gold);
+      margin-bottom: 2rem;
+    }
+    .about-text p {
+      font-size: 0.95rem;
+      line-height: 1.8;
+      color: var(--brand-text-light);
+      margin-bottom: 1rem;
+    }
+    .about-image {
+      position: relative;
+    }
+    .about-image .image-frame {
+      position: relative;
+      border-radius: 8px;
+      overflow: hidden;
+      box-shadow: 0 20px 60px rgba(52, 87, 147, 0.15);
+    }
+    .about-image .image-frame::after {
+      content: '';
+      position: absolute;
+      top: -10px;
+      right: -10px;
+      width: 100%;
+      height: 100%;
+      border: 2px solid var(--brand-gold);
+      border-radius: 8px;
+      z-index: -1;
+    }
+    .about-image img {
+      width: 100%;
+      height: 400px;
+      object-fit: cover;
+      display: block;
+    }
+    .about-details {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.5rem;
+      margin-top: 2rem;
+    }
+    .about-detail {
+      text-align: center;
+      padding: 1.5rem 1rem;
+      background: var(--brand-cream);
+      border-radius: 8px;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    .about-detail:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 8px 30px rgba(52, 87, 147, 0.1);
+    }
+    .about-detail .icon {
+      font-size: 1.5rem;
+      color: var(--brand-gold);
+      margin-bottom: 0.5rem;
+    }
+    .about-detail h4 {
+      font-family: var(--font-heading);
+      font-size: 0.95rem;
+      color: var(--brand-blue);
+      margin-bottom: 0.3rem;
+    }
+    .about-detail p {
+      font-size: 0.8rem;
+      color: var(--brand-text-light);
+      line-height: 1.5;
+    }
+
+    /* ============================================
+       MENUS SECTION
+       ============================================ */
+    .menus {
+      background: linear-gradient(180deg, var(--brand-cream) 0%, #ece5d8 100%);
+      position: relative;
+    }
+    .menus::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--brand-gold), transparent);
+    }
+    .menu-cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 2rem;
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+    .menu-card {
+      background: var(--brand-white);
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.06);
+      transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.4s ease;
+      position: relative;
+    }
+    .menu-card:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 20px 50px rgba(52, 87, 147, 0.12);
+    }
+    .menu-card-header {
+      padding: 2rem 2rem 1rem;
+      text-align: center;
+      position: relative;
+    }
+    .menu-card-header::after {
+      content: '';
+      display: block;
+      width: 40px;
+      height: 2px;
+      background: var(--brand-gold);
+      margin: 1rem auto 0;
+    }
+    .menu-card-header h3 {
+      font-family: var(--font-heading);
+      font-size: 1.4rem;
+      color: var(--brand-blue);
+      font-weight: 600;
+    }
+    .menu-card-header p {
+      font-size: 0.85rem;
+      color: var(--brand-text-light);
+      margin-top: 0.5rem;
+    }
+    .menu-card-body {
+      padding: 1.5rem 2rem;
+    }
+    .menu-card-body .menu-preview {
+      font-size: 0.85rem;
+      color: var(--brand-text-light);
+      line-height: 1.7;
+    }
+    .menu-card-body .menu-preview ul {
+      list-style: none;
+      padding: 0;
+    }
+    .menu-card-body .menu-preview li {
+      padding: 0.3rem 0;
+      border-bottom: 1px solid rgba(212, 165, 116, 0.15);
+      display: flex;
+      justify-content: space-between;
+    }
+    .menu-card-body .menu-preview li:last-child { border-bottom: none; }
+    .menu-card-body .menu-preview .item-name {
+      font-weight: 400;
+      color: var(--brand-text);
+    }
+    .menu-card-footer {
+      padding: 1rem 2rem 2rem;
+      display: flex;
+      justify-content: center;
+      gap: 0.8rem;
+    }
+    .menu-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.7rem 1.4rem;
+      border-radius: 50px;
+      font-family: var(--font-body);
+      font-size: 0.8rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      transition: all 0.3s ease;
+      border: 2px solid;
+      cursor: pointer;
+    }
+    .menu-btn.es {
+      background: var(--brand-blue);
+      color: #fff;
+      border-color: var(--brand-blue);
+    }
+    .menu-btn.es:hover {
+      background: transparent;
+      color: var(--brand-blue);
+    }
+    .menu-btn.en {
+      background: transparent;
+      color: var(--brand-blue);
+      border-color: var(--brand-blue);
+    }
+    .menu-btn.en:hover {
+      background: var(--brand-blue);
+      color: #fff;
+    }
+    .menu-btn.loading {
+      opacity: 0.5;
+      pointer-events: none;
+      position: relative;
+    }
+    .menu-btn.loading::after {
+      content: '';
+      position: absolute;
+      width: 14px;
+      height: 14px;
+      border: 2px solid transparent;
+      border-top-color: currentColor;
+      border-radius: 50%;
+      animation: spin 0.8s linear infinite;
+      right: 12px;
+      top: 50%;
+      transform: translateY(-50%);
+    }
+    .menu-btn.error {
+      border-color: var(--brand-terracotta);
+      color: var(--brand-terracotta);
+      background: transparent;
+      pointer-events: none;
+      font-size: 0.7rem;
+    }
+    @keyframes spin {
+      to { transform: translateY(-50%) rotate(360deg); }
+    }
+    .flag-icon {
+      width: 18px;
+      height: 13px;
+      border-radius: 2px;
+      display: inline-block;
+      position: relative;
+      overflow: hidden;
+      flex-shrink: 0;
+    }
+    .flag-es {
+      background: linear-gradient(
+        to bottom,
+        #c60b1e 0%, #c60b1e 25%,
+        #ffc400 25%, #ffc400 75%,
+        #c60b1e 75%, #c60b1e 100%
+      );
+    }
+    .flag-gb {
+      background: #012169;
+      position: relative;
+    }
+    .flag-gb::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 50%;
+      transform: translateX(-50%);
+      width: 4px;
+      height: 100%;
+      background: #fff;
+    }
+    .flag-gb::after {
+      content: '';
+      position: absolute;
+      left: 0; top: 50%;
+      transform: translateY(-50%);
+      width: 100%;
+      height: 4px;
+      background: #fff;
+    }
+
+    /* ============================================
+       INFO / CONTACT SECTION
+       ============================================ */
+    .contact {
+      background: var(--brand-blue-dark);
+      color: #fff;
+      position: relative;
+      overflow: hidden;
+    }
+    .contact::before {
+      content: '';
+      position: absolute;
+      top: -100px;
+      right: -100px;
+      width: 400px;
+      height: 400px;
+      border-radius: 50%;
+      background: rgba(212, 165, 116, 0.05);
+    }
+    .contact-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 3rem;
+      max-width: 1100px;
+      margin: 0 auto;
+      position: relative;
+    }
+    .contact-info h3 {
+      font-family: var(--font-heading);
+      font-size: 1.3rem;
+      color: var(--brand-gold);
+      margin-bottom: 1.5rem;
+    }
+    .contact-info .info-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 1rem;
+      margin-bottom: 1.2rem;
+    }
+    .contact-info .info-item .info-icon {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      background: rgba(212, 165, 116, 0.15);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      color: var(--brand-gold);
+      font-size: 0.9rem;
+    }
+    .contact-info .info-item .info-text {
+      font-size: 0.9rem;
+      line-height: 1.6;
+      color: rgba(255,255,255,0.85);
+    }
+    .contact-info .info-item .info-text strong {
+      display: block;
+      color: #fff;
+      font-weight: 600;
+      margin-bottom: 0.2rem;
+    }
+    .social-links {
+      display: flex;
+      gap: 1rem;
+      margin-top: 1.5rem;
+    }
+    .social-link {
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.1);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.3s ease;
+      color: #fff;
+    }
+    .social-link:hover {
+      background: var(--brand-gold);
+      color: var(--brand-blue-dark);
+      transform: translateY(-3px);
+    }
+    .social-link svg {
+      width: 20px;
+      height: 20px;
+      fill: currentColor;
+    }
+
+    /* ============================================
+       FOOTER
+       ============================================ */
+    .footer {
+      background: #0f1a30;
+      color: rgba(255,255,255,0.5);
+      text-align: center;
+      padding: 2rem;
+      font-size: 0.8rem;
+    }
+    .footer a {
+      color: var(--brand-gold);
+    }
+    .footer a:hover {
+      color: var(--brand-gold-light);
+    }
+
+    /* ============================================
+       ANIMATIONS
+       ============================================ */
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(30px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes bounce {
+      0%, 20%, 50%, 80%, 100% { transform: translateX(-50%) translateY(0); }
+      40% { transform: translateX(-50%) translateY(-10px); }
+      60% { transform: translateX(-50%) translateY(-5px); }
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    /* Scroll reveal */
+    .reveal {
+      opacity: 0;
+      transform: translateY(40px);
+      transition: opacity 0.8s ease, transform 0.8s ease;
+    }
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* ============================================
+       RESPONSIVE
+       ============================================ */
+    @media (max-width: 900px) {
+      .about-grid { grid-template-columns: 1fr; gap: 2rem; }
+      .contact-grid { grid-template-columns: 1fr; gap: 2.5rem; }
+      .about-details { grid-template-columns: 1fr 1fr; }
+    }
+    @media (max-width: 768px) {
+      .navbar-links { 
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: rgba(245, 240, 232, 0.98);
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        gap: 2.5rem;
+        z-index: 999;
+      }
+      .navbar-links.active { display: flex; }
+      .navbar-links a { font-size: 1.1rem; }
+      .hamburger { display: flex; }
+      .menu-cards { grid-template-columns: 1fr; }
+      .about-details { grid-template-columns: 1fr; }
+      section { padding: 3rem 1.5rem; }
+      .hero-logo { width: 130px; }
+    }
+    @media (max-width: 480px) {
+      .menu-card-footer { flex-direction: column; align-items: stretch; }
+      .menu-btn { justify-content: center; }
+    }
+
+    /* ============================================
+       LOADING SCREEN
+       ============================================ */
+    .loader {
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      z-index: 9999;
+      background: var(--brand-dark);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      transition: opacity 0.8s ease, visibility 0.8s ease;
+    }
+    .loader.hidden {
+      opacity: 0;
+      visibility: hidden;
+    }
+    .loader-logo {
+      width: 120px;
+      filter: brightness(0) invert(1);
+      margin-bottom: 2rem;
+      animation: fadeIn 1s ease;
+    }
+    .loader-bar {
+      width: 200px;
+      height: 2px;
+      background: rgba(255,255,255,0.1);
+      border-radius: 2px;
+      overflow: hidden;
+    }
+    .loader-bar-fill {
+      height: 100%;
+      width: 0%;
+      background: var(--brand-gold);
+      border-radius: 2px;
+      transition: width 0.3s ease;
+    }
+  </style>
+
+  <!-- Three.js Import Map -->
+  <script type="importmap">
+  {
+    "imports": {
+      "three": "https://cdn.jsdelivr.net/npm/three@0.170.0/build/three.module.js",
+      "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.170.0/examples/jsm/"
+    }
+  }
+  </script>
+</head>
+<body>
+
+  <!-- ==================== LOADER ==================== -->
+  <div class="loader" id="loader">
+    <img src="00%20-%20LOGO.png" alt="El Patio" class="loader-logo">
+    <div class="loader-bar">
+      <div class="loader-bar-fill" id="loaderFill"></div>
+    </div>
+  </div>
+
+  <!-- ==================== NAVIGATION ==================== -->
+  <nav class="navbar" id="navbar">
+    <div class="navbar-logo">
+      <img src="00%20-%20LOGO.png" alt="El Patio Gastro Bar">
+    </div>
+    <ul class="navbar-links" id="navLinks">
+      <li><a href="#inicio">Inicio</a></li>
+      <li><a href="#nosotros">Nosotros</a></li>
+      <li><a href="#cartas">Cartas</a></li>
+      <li><a href="#contacto">Contacto</a></li>
+    </ul>
+    <button class="hamburger" id="hamburger" aria-label="Menú">
+      <span></span>
+      <span></span>
+      <span></span>
+    </button>
+  </nav>
+
+  <!-- ==================== HERO / 3D SCENE ==================== -->
+  <section class="hero" id="inicio">
+    <canvas id="heroCanvas"></canvas>
+    <div class="hero-overlay">
+      <div class="hero-content">
+        <img src="00%20-%20LOGO.png" alt="El Patio Gastro Bar" class="hero-logo">
+        <p class="hero-tagline">Cocina de temporada, fresca y llena de sabor</p>
+        <p class="hero-location">Hotel Albaicín &middot; Coín, Málaga</p>
+      </div>
+    </div>
+    <div class="hero-scroll-indicator" onclick="document.getElementById('nosotros').scrollIntoView({behavior:'smooth'})">
+      <span></span>
+    </div>
+  </section>
+
+  <!-- ==================== ABOUT ==================== -->
+  <section class="about" id="nosotros">
+    <div class="section-header reveal">
+      <h2>Nosotros</h2>
+      <div class="ornament"><span>&#10047;</span></div>
+    </div>
+    <div class="about-grid">
+      <div class="about-text reveal">
+        <blockquote>
+          &ldquo;Bienvenidos a El Patio Gastro Bar. Nos encontramos en este icónico enclave para la ciudad de Coín, dos casas patio que se unieron entre sí, dando lugar a este espacio tan mágico en el que nos encontramos.&rdquo;
+        </blockquote>
+        <p>
+          El patio andaluz, el espacio común por excelencia, un lugar para el encuentro, para las reuniones, dónde resguardarse del pesado calor en verano y cobijarse en las noches de invierno. Es aquí dónde os presentamos esta oferta fresca, desenfadada y llena de sabor.
+        </p>
+        <p>
+          Una cocina dinámica y de temporada, sorpresiva y llena de color, dónde esperamos podáis deleitaros con productos de la zona. Ubicados en el interior del Hotel Albaicín, una casa del siglo XVIII restaurada con todo el encanto andaluz.
+        </p>
+      </div>
+      <div class="about-image reveal">
+        <div class="image-frame">
+          <!-- Decorative patio illustration using CSS since no photo available -->
+          <div style="width:100%;height:400px;background:linear-gradient(135deg,#e8ddd0 0%,#d4c4a8 50%,#c9b99a 100%);display:flex;flex-direction:column;justify-content:center;align-items:center;position:relative;overflow:hidden;">
+            <!-- Patio tile pattern -->
+            <div style="position:absolute;bottom:0;left:0;right:0;height:120px;background:repeating-linear-gradient(90deg,#345793 0px,#345793 20px,transparent 20px,transparent 40px),repeating-linear-gradient(0deg,#345793 0px,#345793 20px,transparent 20px,transparent 40px);opacity:0.15;"></div>
+            <!-- Arch silhouette -->
+            <div style="width:140px;height:200px;border:4px solid #345793;border-bottom:none;border-radius:70px 70px 0 0;opacity:0.3;margin-bottom:-2px;"></div>
+            <div style="width:160px;height:4px;background:#345793;opacity:0.3;"></div>
+            <!-- Plant -->
+            <div style="position:absolute;bottom:80px;right:40px;font-size:3rem;opacity:0.2;color:#2d6a1e;">&#9752;</div>
+            <div style="position:absolute;bottom:80px;left:40px;font-size:3rem;opacity:0.2;color:#2d6a1e;">&#9752;</div>
+            <!-- Text -->
+            <p style="font-family:var(--font-display);font-size:1.2rem;color:#345793;opacity:0.6;margin-top:1rem;font-style:italic;">El Patio Andaluz</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="about-details reveal">
+      <div class="about-detail">
+        <div class="icon">&#9749;</div>
+        <h4>Producto Local</h4>
+        <p>Trabajamos con productos de temporada, en su mayoría locales y de la zona de Coín y Málaga.</p>
+      </div>
+      <div class="about-detail">
+        <div class="icon">&#9733;</div>
+        <h4>Cocina Creativa</h4>
+        <p>Una propuesta fresca y desenfadada que fusiona tradición andaluza con toques contemporáneos.</p>
+      </div>
+      <div class="about-detail">
+        <div class="icon">&#9752;</div>
+        <h4>Entorno Único</h4>
+        <p>Un patio andaluz del siglo XVIII en el corazón del Hotel Albaicín, un espacio mágico e irrepetible.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== MENUS ==================== -->
+  <section class="menus" id="cartas">
+    <div class="section-header reveal">
+      <h2>Nuestras Cartas</h2>
+      <div class="ornament"><span>&#10047;</span></div>
+      <p>Descubre nuestra oferta gastronómica, pensada para cada momento del día y cada estación del año.</p>
+    </div>
+
+    <div class="menu-cards">
+
+      <!-- BRUNCH -->
+      <div class="menu-card reveal">
+        <div class="menu-card-header">
+          <h3>Carta Brunch</h3>
+          <p>Domingos de 10:00h a 12:30h</p>
+        </div>
+        <div class="menu-card-body">
+          <div class="menu-preview">
+            <ul>
+              <li><span class="item-name">Bowl de yogur con granola y frutos rojos</span><span>6 &euro;</span></li>
+              <li><span class="item-name">Huevos benedict con champiñones</span><span>8 &euro;</span></li>
+              <li><span class="item-name">Tosta de hogaza con aguacate y hummus</span><span>8 &euro;</span></li>
+              <li><span class="item-name">Huevos benedict con salmón</span><span>10 &euro;</span></li>
+              <li><span class="item-name">Pancakes de pera caramelizada</span><span>6 &euro;</span></li>
+            </ul>
+          </div>
+        </div>
+        <div class="menu-card-footer">
+          <a id="link-brunch" href="#" target="_blank" class="menu-btn es loading">
+            <span class="flag-icon flag-es"></span> Cargando...
+          </a>
+        </div>
+      </div>
+
+      <!-- PRIMAVERA -->
+      <div class="menu-card reveal">
+        <div class="menu-card-header">
+          <h3>Carta Primavera</h3>
+          <p>Nuestra carta de temporada</p>
+        </div>
+        <div class="menu-card-body">
+          <div class="menu-preview">
+            <ul>
+              <li><span class="item-name">Bao de langostino</span><span>6 &euro;</span></li>
+              <li><span class="item-name">Steak tartar <em>NUEVO</em></span><span>18 &euro;</span></li>
+              <li><span class="item-name">Risotto de setas con foie</span><span>15 &euro;</span></li>
+              <li><span class="item-name">Presa ibérica del Valle de Los Pedroches</span><span>22 &euro;</span></li>
+              <li><span class="item-name">Entrecot de rubia vieja gallega</span><span>30 &euro;</span></li>
+            </ul>
+          </div>
+        </div>
+        <div class="menu-card-footer">
+          <a id="link-primavera-es" href="#" target="_blank" class="menu-btn es loading">
+            <span class="flag-icon flag-es"></span> Cargando...
+          </a>
+          <a id="link-primavera-en" href="#" target="_blank" class="menu-btn en loading">
+            <span class="flag-icon flag-gb"></span> Loading...
+          </a>
+        </div>
+      </div>
+
+      <!-- TAPAS -->
+      <div class="menu-card reveal">
+        <div class="menu-card-header">
+          <h3>Carta Tapas</h3>
+          <p>Pequeñas delicias para compartir</p>
+        </div>
+        <div class="menu-card-body">
+          <div class="menu-preview">
+            <ul>
+              <li><span class="item-name">Gildas de anchoas</span><span>3 &euro;</span></li>
+              <li><span class="item-name">Torrezno al estilo soriano <em>NUEVO</em></span><span>3 &euro;</span></li>
+              <li><span class="item-name">Brioche de langostinos</span><span>5 &euro;</span></li>
+              <li><span class="item-name">Mini burguer con pan de churros</span><span>5 &euro;</span></li>
+              <li><span class="item-name">Mazamorra de almendras tiernas</span><span>5 &euro;</span></li>
+            </ul>
+          </div>
+        </div>
+        <div class="menu-card-footer">
+          <a id="link-tapas-es" href="#" target="_blank" class="menu-btn es loading">
+            <span class="flag-icon flag-es"></span> Cargando...
+          </a>
+          <a id="link-tapas-en" href="#" target="_blank" class="menu-btn en loading">
+            <span class="flag-icon flag-gb"></span> Loading...
+          </a>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ==================== CONTACT ==================== -->
+  <section class="contact" id="contacto">
+    <div class="section-header reveal" style="margin-bottom:3rem;">
+      <h2 style="color:#fff;">Contacto</h2>
+      <div class="ornament"><span style="color:var(--brand-gold);">&#10047;</span></div>
+    </div>
+    <div class="contact-grid">
+      <div class="contact-info reveal">
+        <h3>El Patio Gastro Bar</h3>
+        <div class="info-item">
+          <div class="info-icon">&#9993;</div>
+          <div class="info-text">
+            <strong>Email</strong>
+            elpatiogastrobarr@gmail.com
+          </div>
+        </div>
+        <div class="info-item">
+          <div class="info-icon">&#9742;</div>
+          <div class="info-text">
+            <strong>Reservas</strong>
+            623 94 93 24
+          </div>
+        </div>
+        <div class="info-item">
+          <div class="info-icon">&#9201;</div>
+          <div class="info-text">
+            <strong>Horario</strong>
+            Consultar horarios en redes sociales
+          </div>
+        </div>
+      </div>
+      <div class="contact-info reveal">
+        <h3>Ubicación</h3>
+        <div class="info-item">
+          <div class="info-icon">&#9873;</div>
+          <div class="info-text">
+            <strong>Dirección</strong>
+            C/ Canónigo Ordóñez, 17<br>
+            29100 Coín, Málaga, España
+          </div>
+        </div>
+        <div class="info-item">
+          <div class="info-icon">&#9962;</div>
+          <div class="info-text">
+            <strong>Dentro de</strong>
+            Hotel Albaicín
+          </div>
+        </div>
+        <a href="https://maps.google.com/?q=Calle+Canonigo+Ordonez+17+Coin+Malaga" target="_blank" style="display:inline-flex;align-items:center;gap:0.5rem;margin-top:1rem;font-size:0.85rem;color:var(--brand-gold);font-weight:600;letter-spacing:0.05em;">
+          CÓMO LLEGAR &rarr;
+        </a>
+      </div>
+      <div class="contact-info reveal">
+        <h3>Síguenos</h3>
+        <p style="font-size:0.9rem;color:rgba(255,255,255,0.7);line-height:1.6;margin-bottom:1.5rem;">
+          Sigue nuestras novedades, platos del día y eventos en nuestras redes sociales.
+        </p>
+        <div class="social-links">
+          <a href="https://www.instagram.com/elpatiogastrobarcoin/" target="_blank" class="social-link" title="Instagram">
+            <svg viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+          </a>
+          <a href="https://www.facebook.com/Elpatiogastrobarcoin" target="_blank" class="social-link" title="Facebook">
+            <svg viewBox="0 0 24 24"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+          </a>
+          <a href="https://www.tripadvisor.es/Restaurant_Review-g580272-d34328845-Reviews-El_Patio_Gastro_Bar-Coin_Costa_del_Sol_Province_of_Malaga_Andalucia.html" target="_blank" class="social-link" title="TripAdvisor">
+            <svg viewBox="0 0 24 24"><path d="M12.006 4.295c-2.67 0-5.338.784-7.645 2.353H0l1.963 2.135a5.997 5.997 0 004.04 10.43 5.976 5.976 0 004.003-1.533l2 2.164 2-2.163a5.976 5.976 0 004.003 1.532 5.997 5.997 0 004.04-10.43l1.963-2.135h-4.362a14.18 14.18 0 00-7.644-2.353zM6.003 17.213a3.997 3.997 0 110-7.994 3.997 3.997 0 010 7.994zm11.994 0a3.997 3.997 0 110-7.994 3.997 3.997 0 010 7.994zM6.003 11.219a2.998 2.998 0 100 5.996 2.998 2.998 0 000-5.996zm11.994 0a2.998 2.998 0 100 5.996 2.998 2.998 0 000-5.996z"/></svg>
+          </a>
+        </div>
+        <div class="social-links" style="margin-top:1rem;">
+          <a href="https://www.instagram.com/hotelalbaicincoin/" target="_blank" class="social-link" title="Hotel Albaicín Instagram" style="background:rgba(212,165,116,0.15);">
+            <svg viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+          </a>
+          <a href="https://hotelalbaicincoin.com" target="_blank" class="social-link" title="Hotel Albaicín Web" style="background:rgba(212,165,116,0.15);font-size:0.7rem;font-weight:700;letter-spacing:0.05em;">
+            H
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== FOOTER ==================== -->
+  <footer class="footer">
+    <p>&copy; 2026 El Patio Gastro Bar &middot; Hotel Albaicín &middot; Coín, Málaga &middot; <a href="mailto:elpatiogastrobarr@gmail.com">elpatiogastrobarr@gmail.com</a></p>
+  </footer>
+
+  <!-- ==================== THREE.JS 3D SCENE ==================== -->
+  <script type="module">
+    import * as THREE from 'three';
+    import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
+
+    // ============================================
+    // INITIALIZATION
+    // ============================================
+    const canvas = document.getElementById('heroCanvas');
+    const scene = new THREE.Scene();
+    
+    const camera = new THREE.PerspectiveCamera(50, canvas.clientWidth / canvas.clientHeight, 0.1, 500);
+    camera.position.set(0, 8, 18);
+    
+    const renderer = new THREE.WebGLRenderer({ 
+      canvas, 
+      antialias: true, 
+      alpha: false 
+    });
+    renderer.setSize(canvas.clientWidth, canvas.clientHeight);
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+    renderer.shadowMap.enabled = true;
+    renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+    renderer.toneMapping = THREE.ACESFilmicToneMapping;
+    renderer.toneMappingExposure = 1.0;
+
+    // Controls - gentle auto-rotation
+    const controls = new OrbitControls(camera, renderer.domElement);
+    controls.enableDamping = true;
+    controls.dampingFactor = 0.03;
+    controls.target.set(0, 2.5, 0);
+    controls.maxPolarAngle = Math.PI / 2.1;
+    controls.minPolarAngle = Math.PI / 6;
+    controls.minDistance = 8;
+    controls.maxDistance = 30;
+    controls.autoRotate = true;
+    controls.autoRotateSpeed = 0.4;
+    controls.enablePan = false;
+
+    // ============================================
+    // SCENE BACKGROUND - Night sky gradient
+    // ============================================
+    scene.background = new THREE.Color(0x0a0e1a);
+    scene.fog = new THREE.FogExp2(0x0a0e1a, 0.012);
+
+    // ============================================
+    // LIGHTING - Warm evening atmosphere
+    // ============================================
+    const ambientLight = new THREE.AmbientLight(0x1a1a3e, 0.4);
+    scene.add(ambientLight);
+
+    const moonLight = new THREE.DirectionalLight(0x4466aa, 0.6);
+    moonLight.position.set(10, 20, -5);
+    moonLight.castShadow = true;
+    moonLight.shadow.mapSize.set(2048, 2048);
+    moonLight.shadow.camera.near = 0.5;
+    moonLight.shadow.camera.far = 60;
+    moonLight.shadow.camera.left = -20;
+    moonLight.shadow.camera.right = 20;
+    moonLight.shadow.camera.top = 20;
+    moonLight.shadow.camera.bottom = -20;
+    scene.add(moonLight);
+
+    // Warm interior lights
+    const warmLight1 = new THREE.PointLight(0xffa040, 2.5, 15);
+    warmLight1.position.set(0, 3.5, 0);
+    warmLight1.castShadow = true;
+    scene.add(warmLight1);
+
+    const warmLight2 = new THREE.PointLight(0xffcc66, 1.5, 10);
+    warmLight2.position.set(-3, 3, -3);
+    scene.add(warmLight2);
+
+    const warmLight3 = new THREE.PointLight(0xffcc66, 1.5, 10);
+    warmLight3.position.set(3, 3, -3);
+    scene.add(warmLight3);
+
+    const warmLight4 = new THREE.PointLight(0xffcc66, 1.2, 10);
+    warmLight4.position.set(3, 3, 3);
+    scene.add(warmLight4);
+
+    const warmLight5 = new THREE.PointLight(0xffcc66, 1.2, 10);
+    warmLight5.position.set(-3, 3, 3);
+    scene.add(warmLight5);
+
+    // Hemisphere for ambient fill
+    const hemiLight = new THREE.HemisphereLight(0x1a1a3e, 0x345793, 0.3);
+    scene.add(hemiLight);
+
+    // ============================================
+    // MATERIALS
+    // ============================================
+    const whiteWallMat = new THREE.MeshStandardMaterial({ 
+      color: 0xf0ebe0, roughness: 0.85, metalness: 0 
+    });
+    const terracottaMat = new THREE.MeshStandardMaterial({ 
+      color: 0xc4653a, roughness: 0.7, metalness: 0.05 
+    });
+    const tileFloorMat = new THREE.MeshStandardMaterial({ 
+      color: 0xd4a574, roughness: 0.6, metalness: 0.05 
+    });
+    const azulejoBlueMat = new THREE.MeshStandardMaterial({ 
+      color: 0x345793, roughness: 0.5, metalness: 0.1 
+    });
+    const stoneMat = new THREE.MeshStandardMaterial({ 
+      color: 0xc9b99a, roughness: 0.7, metalness: 0.05 
+    });
+    const waterMat = new THREE.MeshStandardMaterial({ 
+      color: 0x4488bb, roughness: 0.05, metalness: 0.4, 
+      transparent: true, opacity: 0.7 
+    });
+    const foliageMat = new THREE.MeshStandardMaterial({ 
+      color: 0x2d6a1e, roughness: 0.8, metalness: 0 
+    });
+    const darkFoliageMat = new THREE.MeshStandardMaterial({ 
+      color: 0x1a4a0e, roughness: 0.85, metalness: 0 
+    });
+    const darkWoodMat = new THREE.MeshStandardMaterial({ 
+      color: 0x3a1f0a, roughness: 0.7, metalness: 0.1 
+    });
+    const ironMat = new THREE.MeshStandardMaterial({ 
+      color: 0x1a1a1a, roughness: 0.4, metalness: 0.8 
+    });
+    const goldMat = new THREE.MeshStandardMaterial({ 
+      color: 0xd4a574, roughness: 0.3, metalness: 0.7 
+    });
+    const groundMat = new THREE.MeshStandardMaterial({ 
+      color: 0x8b7355, roughness: 0.9, metalness: 0 
+    });
+
+    // ============================================
+    // BUILD THE ANDALUSIAN PATIO
+    // ============================================
+    const patio = new THREE.Group();
+    const PATIO_W = 14;
+    const PATIO_D = 14;
+    const WALL_H = 6;
+    const WALL_T = 0.5;
+
+    // ---- GROUND (outside patio) ----
+    const groundGeo = new THREE.PlaneGeometry(100, 100);
+    const ground = new THREE.Mesh(groundGeo, groundMat);
+    ground.rotation.x = -Math.PI / 2;
+    ground.position.y = -0.01;
+    ground.receiveShadow = true;
+    scene.add(ground);
+
+    // ---- TILED FLOOR ----
+    const tileSize = 0.7;
+    const floorGroup = new THREE.Group();
+    for (let x = -PATIO_W / 2; x < PATIO_W / 2; x += tileSize) {
+      for (let z = -PATIO_D / 2; z < PATIO_D / 2; z += tileSize) {
+        const checker = ((Math.floor(x / tileSize) + Math.floor(z / tileSize)) % 2 === 0);
+        const mat = checker ? tileFloorMat : azulejoBlueMat;
+        const tile = new THREE.Mesh(new THREE.PlaneGeometry(tileSize * 0.95, tileSize * 0.95), mat);
+        tile.rotation.x = -Math.PI / 2;
+        tile.position.set(x + tileSize / 2, 0, z + tileSize / 2);
+        tile.receiveShadow = true;
+        floorGroup.add(tile);
+      }
+    }
+    patio.add(floorGroup);
+
+    // ---- WALLS ----
+    function createWall(w, h, d, x, y, z, ry = 0) {
+      const wallGroup = new THREE.Group();
+      
+      // White wall body
+      const wallGeo = new THREE.BoxGeometry(w, h, d);
+      const wall = new THREE.Mesh(wallGeo, whiteWallMat);
+      wall.position.y = h / 2;
+      wall.castShadow = true;
+      wall.receiveShadow = true;
+      wallGroup.add(wall);
+
+      // Azulejo tile wainscoting (lower 40%)
+      const tileH = h * 0.4;
+      const tileWainscot = new THREE.Mesh(
+        new THREE.BoxGeometry(w + 0.02, tileH, d + 0.02),
+        azulejoBlueMat
+      );
+      tileWainscot.position.y = tileH / 2;
+      wallGroup.add(tileWainscot);
+
+      // Terracotta cornice
+      const cornice = new THREE.Mesh(
+        new THREE.BoxGeometry(w + 0.15, 0.2, d + 0.3),
+        terracottaMat
+      );
+      cornice.position.y = h + 0.1;
+      wallGroup.add(cornice);
+
+      wallGroup.position.set(x, y, z);
+      wallGroup.rotation.y = ry;
+      return wallGroup;
+    }
+
+    // North wall (with arch opening)
+    patio.add(createWall(PATIO_W / 2 - 1.5, WALL_H, WALL_T, -PATIO_W / 4 - 0.75, 0, -PATIO_D / 2));
+    patio.add(createWall(PATIO_W / 2 - 1.5, WALL_H, WALL_T, PATIO_W / 4 + 0.75, 0, -PATIO_D / 2));
+    // Arch top section
+    patio.add(createWall(PATIO_W, WALL_H * 0.25, WALL_T, 0, WALL_H * 0.75, -PATIO_D / 2));
+    
+    // South wall
+    patio.add(createWall(PATIO_W, WALL_H, WALL_T, 0, 0, PATIO_D / 2));
+    // West wall
+    patio.add(createWall(WALL_T, WALL_H, PATIO_D, -PATIO_W / 2, 0, 0));
+    // East wall
+    patio.add(createWall(WALL_T, WALL_H, PATIO_D, PATIO_W / 2, 0, 0));
+
+    // ---- MOORISH ARCH (north entrance) ----
+    const archShape = new THREE.Shape();
+    const aw = 3.0, ah = WALL_H * 0.75;
+    archShape.moveTo(-aw / 2, 0);
+    archShape.lineTo(-aw / 2, ah - 1.5);
+    archShape.bezierCurveTo(-aw / 2, ah + 1.0, -aw * 0.15, ah + 1.0, 0, ah);
+    archShape.bezierCurveTo(aw * 0.15, ah + 1.0, aw / 2, ah + 1.0, aw / 2, ah - 1.5);
+    archShape.lineTo(aw / 2, 0);
+    const archGeo = new THREE.ExtrudeGeometry(archShape, { depth: WALL_T + 0.3, bevelEnabled: false });
+    const archMesh = new THREE.Mesh(archGeo, whiteWallMat);
+    archMesh.position.set(0, 0, -PATIO_D / 2 - 0.15);
+    archMesh.castShadow = true;
+    patio.add(archMesh);
+
+    // ---- COLUMNS ----
+    function createColumn(x, z) {
+      const colGroup = new THREE.Group();
+      const r = 0.18, h = WALL_H;
+
+      // Shaft
+      const shaft = new THREE.Mesh(new THREE.CylinderGeometry(r, r * 1.15, h, 16), stoneMat);
+      shaft.position.y = h / 2;
+      shaft.castShadow = true;
+      colGroup.add(shaft);
+
+      // Capital (top)
+      const capital = new THREE.Mesh(new THREE.CylinderGeometry(r * 2, r, 0.25, 16), stoneMat);
+      capital.position.y = h;
+      colGroup.add(capital);
+
+      // Base
+      const base = new THREE.Mesh(new THREE.CylinderGeometry(r * 1.6, r * 2, 0.15, 16), stoneMat);
+      base.position.y = 0.075;
+      colGroup.add(base);
+
+      colGroup.position.set(x, 0, z);
+      return colGroup;
+    }
+
+    // Columns around the gallery
+    const colPositions = [];
+    const spacing = 3.5;
+    for (let i = -1; i <= 1; i++) {
+      colPositions.push([i * spacing, -PATIO_D / 2 + 2]);
+      colPositions.push([i * spacing, PATIO_D / 2 - 2]);
+    }
+    for (let i = -1; i <= 1; i++) {
+      colPositions.push([-PATIO_W / 2 + 2, i * spacing]);
+      colPositions.push([PATIO_W / 2 - 2, i * spacing]);
+    }
+    colPositions.forEach(([x, z]) => patio.add(createColumn(x, z)));
+
+    // ---- FOUNTAIN ----
+    function createFountain() {
+      const fGroup = new THREE.Group();
+
+      // Outer basin
+      const basin = new THREE.Mesh(new THREE.CylinderGeometry(1.8, 2.1, 0.7, 32), stoneMat);
+      basin.position.y = 0.35;
+      basin.castShadow = true;
+      fGroup.add(basin);
+
+      // Water surface
+      const water = new THREE.Mesh(new THREE.CylinderGeometry(1.65, 1.65, 0.06, 32), waterMat);
+      water.position.y = 0.65;
+      fGroup.add(water);
+
+      // Central pillar
+      const pillar = new THREE.Mesh(new THREE.CylinderGeometry(0.15, 0.22, 1.6, 12), stoneMat);
+      pillar.position.y = 1.2;
+      fGroup.add(pillar);
+
+      // Upper bowl
+      const upperBowl = new THREE.Mesh(new THREE.CylinderGeometry(0.7, 0.3, 0.35, 24), stoneMat);
+      upperBowl.position.y = 1.9;
+      fGroup.add(upperBowl);
+
+      // Upper water
+      const upperWater = new THREE.Mesh(new THREE.CylinderGeometry(0.6, 0.6, 0.04, 24), waterMat);
+      upperWater.position.y = 2.08;
+      fGroup.add(upperWater);
+
+      return fGroup;
+    }
+    patio.add(createFountain());
+
+    // ---- POTTED PLANTS ----
+    function addPlant(x, z, scale = 1, foliageType = 'round') {
+      const plantGroup = new THREE.Group();
+
+      // Terracotta pot
+      const pot = new THREE.Mesh(new THREE.CylinderGeometry(0.3 * scale, 0.22 * scale, 0.5 * scale, 16), terracottaMat);
+      pot.position.y = 0.25 * scale;
+      pot.castShadow = true;
+      plantGroup.add(pot);
+
+      if (foliageType === 'round') {
+        const crown = new THREE.Mesh(new THREE.SphereGeometry(0.5 * scale, 12, 12), foliageMat);
+        crown.position.y = 0.9 * scale;
+        crown.castShadow = true;
+        plantGroup.add(crown);
+      } else if (foliageType === 'tree') {
+        // Trunk
+        const trunk = new THREE.Mesh(new THREE.CylinderGeometry(0.06 * scale, 0.08 * scale, 1.2 * scale, 8), darkWoodMat);
+        trunk.position.y = 0.8 * scale;
+        plantGroup.add(trunk);
+        // Crown
+        const crown1 = new THREE.Mesh(new THREE.SphereGeometry(0.6 * scale, 10, 10), foliageMat);
+        crown1.position.y = 1.8 * scale;
+        crown1.castShadow = true;
+        plantGroup.add(crown1);
+        const crown2 = new THREE.Mesh(new THREE.SphereGeometry(0.45 * scale, 10, 10), darkFoliageMat);
+        crown2.position.set(0.3 * scale, 1.5 * scale, 0.2 * scale);
+        plantGroup.add(crown2);
+      } else {
+        // Tall grass / bush
+        for (let i = 0; i < 5; i++) {
+          const angle = (i / 5) * Math.PI * 2;
+          const leaf = new THREE.Mesh(
+            new THREE.ConeGeometry(0.08 * scale, 0.8 * scale, 4),
+            foliageMat
+          );
+          leaf.position.set(Math.cos(angle) * 0.15 * scale, 0.7 * scale, Math.sin(angle) * 0.15 * scale);
+          leaf.rotation.x = Math.cos(angle) * 0.2;
+          leaf.rotation.z = Math.sin(angle) * 0.2;
+          plantGroup.add(leaf);
+        }
+      }
+
+      plantGroup.position.set(x, 0, z);
+      return plantGroup;
+    }
+
+    // Place plants in corners and along walls
+    patio.add(addPlant(-5, -5, 1.2, 'tree'));
+    patio.add(addPlant(5, -5, 1.2, 'tree'));
+    patio.add(addPlant(-5, 5, 1.0, 'tree'));
+    patio.add(addPlant(5, 5, 1.0, 'tree'));
+    patio.add(addPlant(-4, 0, 0.8, 'round'));
+    patio.add(addPlant(4, 0, 0.8, 'round'));
+    patio.add(addPlant(0, -5, 0.9, 'round'));
+    patio.add(addPlant(-2, -5, 0.7, 'bush'));
+    patio.add(addPlant(2, -5, 0.7, 'bush'));
+
+    // ---- WROUGHT IRON LANTERN (hanging lights) ----
+    function createLantern(x, y, z) {
+      const lanternGroup = new THREE.Group();
+      
+      // Chain
+      const chain = new THREE.Mesh(new THREE.CylinderGeometry(0.015, 0.015, 1.0, 6), ironMat);
+      chain.position.y = 0.5;
+      lanternGroup.add(chain);
+
+      // Lantern body
+      const body = new THREE.Mesh(new THREE.CylinderGeometry(0.15, 0.2, 0.35, 8), ironMat);
+      body.position.y = 1.2;
+      lanternGroup.add(body);
+
+      // Glass (glowing)
+      const glassMat = new THREE.MeshStandardMaterial({ 
+        color: 0xffcc66, emissive: 0xffa030, emissiveIntensity: 0.8,
+        transparent: true, opacity: 0.6 
+      });
+      const glass = new THREE.Mesh(new THREE.CylinderGeometry(0.12, 0.15, 0.25, 8), glassMat);
+      glass.position.y = 1.15;
+      lanternGroup.add(glass);
+
+      // Point light from lantern
+      const light = new THREE.PointLight(0xffa030, 1.0, 6);
+      light.position.y = 1.15;
+      lanternGroup.add(light);
+
+      lanternGroup.position.set(x, y, z);
+      return lanternGroup;
+    }
+
+    patio.add(createLantern(-3, WALL_H - 1, -3));
+    patio.add(createLantern(3, WALL_H - 1, -3));
+    patio.add(createLantern(-3, WALL_H - 1, 3));
+    patio.add(createLantern(3, WALL_H - 1, 3));
+    patio.add(createLantern(0, WALL_H - 1, 0));
+
+    // ---- HOTEL SIGN TEXT (3D) ----
+    function createTextSprite(text, fontSize, color, fontFamily) {
+      const canvas2d = document.createElement('canvas');
+      canvas2d.width = 1024;
+      canvas2d.height = 256;
+      const ctx = canvas2d.getContext('2d');
+      
+      ctx.clearRect(0, 0, canvas2d.width, canvas2d.height);
+      ctx.font = `Bold ${fontSize}px ${fontFamily || 'Georgia'}`;
+      ctx.fillStyle = color || '#d4a574';
+      ctx.textAlign = 'center';
+      ctx.textBaseline = 'middle';
+      ctx.fillText(text, canvas2d.width / 2, canvas2d.height / 2);
+
+      const texture = new THREE.CanvasTexture(canvas2d);
+      texture.needsUpdate = true;
+
+      const material = new THREE.SpriteMaterial({ map: texture, transparent: true, depthWrite: false });
+      const sprite = new THREE.Sprite(material);
+      sprite.scale.set(8, 2, 1);
+      return sprite;
+    }
+
+    // Hotel name on north wall
+    const hotelText = createTextSprite('HOTEL ALBAICÍN', 72, '#d4a574', 'serif');
+    hotelText.position.set(0, WALL_H - 0.8, -PATIO_D / 2 + 0.5);
+    patio.add(hotelText);
+
+    // El Patio text
+    const patioText = createTextSprite('EL PATIO', 56, '#ffffff', 'serif');
+    patioText.position.set(0, 4.2, 0);
+    patio.add(patioText);
+
+    // ---- SECOND BUILDING (hotel) behind the patio ----
+    const hotelGroup = new THREE.Group();
+    
+    // Hotel main building
+    const hotelBody = new THREE.Mesh(
+      new THREE.BoxGeometry(16, 5, 8),
+      whiteWallMat
+    );
+    hotelBody.position.set(0, 2.5, -PATIO_D / 2 - 5);
+    hotelBody.castShadow = true;
+    hotelBody.receiveShadow = true;
+    hotelGroup.add(hotelBody);
+
+    // Hotel roof
+    const roofGeo = new THREE.BoxGeometry(16.5, 0.3, 8.5);
+    const roof = new THREE.Mesh(roofGeo, terracottaMat);
+    roof.position.set(0, 5.15, -PATIO_D / 2 - 5);
+    hotelGroup.add(roof);
+
+    // Hotel windows (glowing)
+    const windowMat = new THREE.MeshStandardMaterial({ 
+      color: 0xffcc66, emissive: 0xffa030, emissiveIntensity: 0.5,
+      transparent: true, opacity: 0.7 
+    });
+    for (let i = -2; i <= 2; i++) {
+      const win = new THREE.Mesh(new THREE.PlaneGeometry(0.8, 1.2), windowMat);
+      win.position.set(i * 2.5, 3, -PATIO_D / 2 - 1.1);
+      hotelGroup.add(win);
+    }
+
+    patio.add(hotelGroup);
+
+    // ---- STARS IN THE SKY ----
+    const starGeometry = new THREE.BufferGeometry();
+    const starCount = 500;
+    const starPositions = new Float32Array(starCount * 3);
+    for (let i = 0; i < starCount; i++) {
+      starPositions[i * 3] = (Math.random() - 0.5) * 100;
+      starPositions[i * 3 + 1] = 15 + Math.random() * 40;
+      starPositions[i * 3 + 2] = (Math.random() - 0.5) * 100;
+    }
+    starGeometry.setAttribute('position', new THREE.BufferAttribute(starPositions, 3));
+    const starMaterial = new THREE.PointsMaterial({ 
+      color: 0xffffff, size: 0.15, sizeAttenuation: true 
+    });
+    const stars = new THREE.Points(starGeometry, starMaterial);
+    scene.add(stars);
+
+    // Add patio to scene
+    scene.add(patio);
+
+    // ============================================
+    // PARTICLES (floating golden dust)
+    // ============================================
+    const particleCount = 80;
+    const particleGeo = new THREE.BufferGeometry();
+    const particlePositions = new Float32Array(particleCount * 3);
+    const particleSpeeds = [];
+    
+    for (let i = 0; i < particleCount; i++) {
+      particlePositions[i * 3] = (Math.random() - 0.5) * PATIO_W;
+      particlePositions[i * 3 + 1] = Math.random() * WALL_H;
+      particlePositions[i * 3 + 2] = (Math.random() - 0.5) * PATIO_D;
+      particleSpeeds.push(0.002 + Math.random() * 0.005);
+    }
+    particleGeo.setAttribute('position', new THREE.BufferAttribute(particlePositions, 3));
+    
+    const particleMat = new THREE.PointsMaterial({
+      color: 0xffcc66,
+      size: 0.08,
+      transparent: true,
+      opacity: 0.6,
+      sizeAttenuation: true
+    });
+    const particles = new THREE.Points(particleGeo, particleMat);
+    scene.add(particles);
+
+    // ============================================
+    // ANIMATION LOOP
+    // ============================================
+    const clock = new THREE.Clock();
+    let loaded = false;
+
+    function animate() {
+      requestAnimationFrame(animate);
+      const t = clock.getElapsedTime();
+
+      // Animate water
+      waterMat.roughness = 0.05 + Math.sin(t * 2) * 0.02;
+
+      // Animate floating particles
+      const positions = particleGeo.attributes.position.array;
+      for (let i = 0; i < particleCount; i++) {
+        positions[i * 3 + 1] += particleSpeeds[i];
+        if (positions[i * 3 + 1] > WALL_H + 1) {
+          positions[i * 3 + 1] = 0;
+        }
+        // Gentle sway
+        positions[i * 3] += Math.sin(t + i) * 0.001;
+      }
+      particleGeo.attributes.position.needsUpdate = true;
+
+      // Subtle warm light flicker
+      warmLight1.intensity = 2.5 + Math.sin(t * 3) * 0.2;
+      warmLight2.intensity = 1.5 + Math.sin(t * 2.5 + 1) * 0.15;
+      warmLight3.intensity = 1.5 + Math.sin(t * 2.8 + 2) * 0.15;
+
+      // Stars twinkle
+      starMaterial.opacity = 0.7 + Math.sin(t * 0.5) * 0.3;
+
+      controls.update();
+      renderer.render(scene, camera);
+
+      // Loading progress
+      if (!loaded && t > 0.5) {
+        loaded = true;
+        const loaderFill = document.getElementById('loaderFill');
+        if (loaderFill) {
+          loaderFill.style.width = '100%';
+          setTimeout(() => {
+            const loader = document.getElementById('loader');
+            if (loader) loader.classList.add('hidden');
+          }, 500);
+        }
+      }
+    }
+    animate();
+
+    // ============================================
+    // RESIZE HANDLER
+    // ============================================
+    function onResize() {
+      const hero = document.querySelector('.hero');
+      if (!hero) return;
+      const w = hero.clientWidth;
+      const h = hero.clientHeight;
+      camera.aspect = w / h;
+      camera.updateProjectionMatrix();
+      renderer.setSize(w, h);
+    }
+    window.addEventListener('resize', onResize);
+
+    // Initial size set
+    onResize();
+
+    // Loading bar progress
+    let loadProgress = 0;
+    const loadInterval = setInterval(() => {
+      loadProgress += Math.random() * 15 + 5;
+      if (loadProgress > 90) loadProgress = 90;
+      const loaderFill = document.getElementById('loaderFill');
+      if (loaderFill) loaderFill.style.width = loadProgress + '%';
+      if (loadProgress >= 90) clearInterval(loadInterval);
+    }, 200);
+
+  </script>
+
+  <!-- ==================== GENERAL JAVASCRIPT ==================== -->
+  <script>
+    // ============================================
+    // NAVBAR SCROLL EFFECT
+    // ============================================
+    const navbar = document.getElementById('navbar');
+    window.addEventListener('scroll', () => {
+      if (window.scrollY > 80) {
+        navbar.classList.add('scrolled');
+      } else {
+        navbar.classList.remove('scrolled');
+      }
+    });
+
+    // ============================================
+    // HAMBURGER MENU
+    // ============================================
+    const hamburger = document.getElementById('hamburger');
+    const navLinks = document.getElementById('navLinks');
+    
+    hamburger.addEventListener('click', () => {
+      hamburger.classList.toggle('active');
+      navLinks.classList.toggle('active');
+    });
+
+    // Close menu when clicking a link
+    navLinks.querySelectorAll('a').forEach(link => {
+      link.addEventListener('click', () => {
+        hamburger.classList.remove('active');
+        navLinks.classList.remove('active');
+      });
+    });
+
+    // ============================================
+    // SCROLL REVEAL ANIMATION
+    // ============================================
+    const revealElements = document.querySelectorAll('.reveal');
+    const revealObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+        }
+      });
+    }, {
+      threshold: 0.15,
+      rootMargin: '0px 0px -50px 0px'
+    });
+
+    revealElements.forEach(el => revealObserver.observe(el));
+
+    // ============================================
+    // SMOOTH SCROLL FOR NAV LINKS
+    // ============================================
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function(e) {
+        e.preventDefault();
+        const target = document.querySelector(this.getAttribute('href'));
+        if (target) {
+          const navHeight = navbar.offsetHeight;
+          const targetPos = target.offsetTop - navHeight;
+          window.scrollTo({ top: targetPos, behavior: 'smooth' });
+        }
+      });
+    });
+
+    // ============================================
+    // GOOGLE SHEETS DYNAMIC MENU LINKS
+    // ============================================
+    // ID de la hoja de cálculo de configuración
+    const SHEET_ID = '1KJvl8INa6SR462FLCM-oP3AqWMJnASG6oH4fIxOlbwQ';
+    const SHEET_NAME = 'Cartas';
+
+    // Mapa de filas en la hoja a IDs de botones en el HTML
+    // Fila 5 = Brunch ES, Fila 6 = Primavera ES, Fila 7 = Primavera EN, etc.
+    const MENU_MAP = {
+      'brunch':       { linkId: 'link-brunch',        labelES: 'Ver Carta',     labelEN: 'View Menu' },
+      'primavera_es': { linkId: 'link-primavera-es',   labelES: 'Español',       labelEN: 'Español' },
+      'primavera_en': { linkId: 'link-primavera-en',   labelES: 'English',       labelEN: 'English' },
+      'tapas_es':     { linkId: 'link-tapas-es',       labelES: 'Español',       labelEN: 'Español' },
+      'tapas_en':     { linkId: 'link-tapas-en',       labelES: 'English',       labelEN: 'English' },
+    };
+
+    /**
+     * Extrae el ID de archivo de un enlace de Google Drive.
+     * Acepta formatos como:
+     *   https://drive.google.com/file/d/FILE_ID/view?usp=drive_link
+     *   https://drive.google.com/file/d/FILE_ID/view
+     *   https://drive.google.com/open?id=FILE_ID
+     *   Solo el FILE_ID directamente
+     */
+    function extractFileId(input) {
+      if (!input || typeof input !== 'string') return null;
+      const trimmed = input.trim();
+      
+      // Si es solo un ID (alfanumérico largo con guiones y guiones bajos)
+      if (/^[a-zA-Z0-9_-]{10,}$/.test(trimmed)) return trimmed;
+      
+      // Formato: /file/d/FILE_ID/
+      const fileMatch = trimmed.match(/\/file\/d\/([a-zA-Z0-9_-]+)/);
+      if (fileMatch) return fileMatch[1];
+      
+      // Formato: ?id=FILE_ID
+      const idMatch = trimmed.match(/[?&]id=([a-zA-Z0-9_-]+)/);
+      if (idMatch) return idMatch[1];
+      
+      // Formato: /d/FILE_ID/ (documentos)
+      const docMatch = trimmed.match(/\/d\/([a-zA-Z0-9_-]+)/);
+      if (docMatch) return docMatch[1];
+      
+      return null;
+    }
+
+    /**
+     * Convierte un ID de archivo de Google Drive en enlace de visualización
+     */
+    function createDriveViewUrl(fileId) {
+      return `https://drive.google.com/file/d/${fileId}/view`;
+    }
+
+    /**
+     * Actualiza un botón de menú con un enlace válido
+     */
+    function updateMenuButton(linkId, url, isES) {
+      const btn = document.getElementById(linkId);
+      if (!btn) return;
+      
+      btn.classList.remove('loading');
+      btn.href = url;
+      
+      if (isES) {
+        btn.innerHTML = '<span class="flag-icon flag-es"></span> Ver Carta';
+      } else {
+        btn.innerHTML = '<span class="flag-icon flag-gb"></span> View Menu';
+      }
+    }
+
+    /**
+     * Marca un botón como error
+     */
+    function setButtonError(linkId, msg) {
+      const btn = document.getElementById(linkId);
+      if (!btn) return;
+      btn.classList.remove('loading');
+      btn.classList.add('error');
+      btn.innerHTML = msg || 'No disponible';
+    }
+
+    /**
+     * Oculta un botón (cuando Activo = NO)
+     */
+    function hideButton(linkId) {
+      const btn = document.getElementById(linkId);
+      if (!btn) return;
+      btn.style.display = 'none';
+    }
+
+    /**
+     * Parsea una línea CSV respetando comillas
+     */
+    function parseCSVLine(line) {
+      const result = [];
+      let current = '';
+      let inQuotes = false;
+      
+      for (let i = 0; i < line.length; i++) {
+        const ch = line[i];
+        if (ch === '"') {
+          if (inQuotes && i + 1 < line.length && line[i + 1] === '"') {
+            current += '"';
+            i++;
+          } else {
+            inQuotes = !inQuotes;
+          }
+        } else if (ch === ',' && !inQuotes) {
+          result.push(current.trim());
+          current = '';
+        } else {
+          current += ch;
+        }
+      }
+      result.push(current.trim());
+      return result;
+    }
+
+    /**
+     * Determina qué tipo de carta es cada fila y la asocia al botón correcto
+     */
+    function identifyMenuKey(nombre, idioma) {
+      const n = (nombre || '').toLowerCase().trim();
+      const lang = (idioma || '').toUpperCase().trim();
+      
+      if (n.includes('brunch')) return 'brunch';
+      if (n.includes('tapas') && lang === 'ES') return 'tapas_es';
+      if (n.includes('tapas') && (lang === 'EN' || lang === 'ING')) return 'tapas_en';
+      if ((n.includes('primavera') || n.includes('spring') || n.includes('carta') || n.includes('menu')) && lang === 'ES') return 'primavera_es';
+      if ((n.includes('primavera') || n.includes('spring') || n.includes('carta') || n.includes('menu')) && (lang === 'EN' || lang === 'ING')) return 'primavera_en';
+      
+      // Fallback: por idioma y posición
+      return null;
+    }
+
+    /**
+     * Función principal: Lee la hoja de cálculo y actualiza los enlaces
+     */
+    async function loadMenuLinks() {
+      // URL del CSV publicado de Google Sheets
+      const csvUrl = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:csv&sheet=${encodeURIComponent(SHEET_NAME)}`;
+      
+      try {
+        const response = await fetch(csvUrl);
+        if (!response.ok) throw new Error(`HTTP ${response.status}`);
+        
+        const csvText = await response.text();
+        const lines = csvText.split('\n').filter(line => line.trim());
+        
+        if (lines.length < 2) throw new Error('Hoja vacía o sin datos');
+        
+        // Procesar cada fila de datos (saltamos la cabecera)
+        for (let i = 1; i < lines.length; i++) {
+          const cols = parseCSVLine(lines[i]);
+          
+          // Columnas: A=num, B=Tipo de Carta, C=Idioma, D=Enlace, E=Activo
+          const nombre = cols[1] || '';
+          const idioma = cols[2] || '';
+          const enlace = cols[3] || '';
+          const activo = (cols[4] || 'SÍ').toUpperCase();
+          
+          // Identificar qué carta es
+          const key = identifyMenuKey(nombre, idioma);
+          if (!key) continue;
+          
+          const config = MENU_MAP[key];
+          if (!config) continue;
+          
+          // Si no está activa, ocultar el botón
+          if (activo !== 'SÍ' && activo !== 'SI') {
+            hideButton(config.linkId);
+            continue;
+          }
+          
+          // Extraer el ID del archivo del enlace
+          const fileId = extractFileId(enlace);
+          if (!fileId || fileId.startsWith('PEGA')) {
+            setButtonError(config.linkId, 'Configurar enlace');
+            continue;
+          }
+          
+          // Construir la URL de visualización y actualizar el botón
+          const viewUrl = createDriveViewUrl(fileId);
+          const isES = idioma.toUpperCase() === 'ES' || nombre.toLowerCase().includes('brunch');
+          updateMenuButton(config.linkId, viewUrl, isES);
+        }
+        
+      } catch (error) {
+        console.warn('No se pudo leer la hoja de cálculo de configuración:', error.message);
+        console.info('Los enlaces a las cartas necesitan configuración. Consulta las instrucciones en la hoja de cálculo.');
+        
+        // Mostrar estado de error en todos los botones
+        Object.values(MENU_MAP).forEach(config => {
+          setButtonError(config.linkId, 'Configurar');
+        });
+      }
+    }
+
+    // Ejecutar la carga de enlaces al cargar la página
+    loadMenuLinks();
+  </script>
+
+</body>
+</html>
