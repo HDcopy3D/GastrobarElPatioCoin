@@ -195,6 +195,30 @@
       margin-top: 1rem;
       animation: fadeInUp 1.5s ease-out 0.6s both;
     }
+    .hero-cta {
+      display: inline-block;
+      margin-top: 2rem;
+      padding: 0.7rem 2.2rem;
+      border: 2px solid var(--brand-gold);
+      border-radius: 50px;
+      font-family: var(--font-body);
+      font-size: 0.8rem;
+      font-weight: 700;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--brand-gold);
+      text-decoration: none;
+      transition: all 0.4s ease;
+      cursor: pointer;
+      pointer-events: auto;
+      animation: fadeInUp 1.5s ease-out 0.8s both;
+    }
+    .hero-cta:hover {
+      background: var(--brand-gold);
+      color: var(--brand-dark);
+      transform: translateY(-2px);
+      box-shadow: 0 6px 25px rgba(212, 165, 116, 0.35);
+    }
     .hero-scroll-indicator {
       position: absolute;
       bottom: 2rem;
@@ -410,31 +434,8 @@
       color: var(--brand-text-light);
       margin-top: 0.5rem;
     }
-    .menu-card-body {
-      padding: 1.5rem 2rem;
-    }
-    .menu-card-body .menu-preview {
-      font-size: 0.85rem;
-      color: var(--brand-text-light);
-      line-height: 1.7;
-    }
-    .menu-card-body .menu-preview ul {
-      list-style: none;
-      padding: 0;
-    }
-    .menu-card-body .menu-preview li {
-      padding: 0.3rem 0;
-      border-bottom: 1px solid rgba(212, 165, 116, 0.15);
-      display: flex;
-      justify-content: space-between;
-    }
-    .menu-card-body .menu-preview li:last-child { border-bottom: none; }
-    .menu-card-body .menu-preview .item-name {
-      font-weight: 400;
-      color: var(--brand-text);
-    }
     .menu-card-footer {
-      padding: 1rem 2rem 2rem;
+      padding: 0.5rem 2rem 2rem;
       display: flex;
       justify-content: center;
       gap: 0.8rem;
@@ -796,6 +797,7 @@
         <img src="00%20-%20LOGO.png" alt="El Patio Gastro Bar" class="hero-logo">
         <p class="hero-tagline">Cocina de temporada, fresca y llena de sabor</p>
         <p class="hero-location">Hotel Albaicín &middot; Coín, Málaga</p>
+        <a href="#cartas" class="hero-cta" onclick="event.preventDefault(); document.getElementById('cartas').scrollIntoView({behavior:'smooth'});">Nuestra Carta</a>
       </div>
     </div>
     <div class="hero-scroll-indicator" onclick="document.getElementById('nosotros').scrollIntoView({behavior:'smooth'})">
@@ -874,17 +876,6 @@
           <h3>Carta Brunch</h3>
           <p>Domingos de 10:00h a 12:30h</p>
         </div>
-        <div class="menu-card-body">
-          <div class="menu-preview">
-            <ul>
-              <li><span class="item-name">Bowl de yogur con granola y frutos rojos</span><span>6 &euro;</span></li>
-              <li><span class="item-name">Huevos benedict con champiñones</span><span>8 &euro;</span></li>
-              <li><span class="item-name">Tosta de hogaza con aguacate y hummus</span><span>8 &euro;</span></li>
-              <li><span class="item-name">Huevos benedict con salmón</span><span>10 &euro;</span></li>
-              <li><span class="item-name">Pancakes de pera caramelizada</span><span>6 &euro;</span></li>
-            </ul>
-          </div>
-        </div>
         <div class="menu-card-footer">
           <a id="link-brunch" href="#" target="_blank" class="menu-btn es loading">
             <span class="flag-icon flag-es"></span> Cargando...
@@ -897,17 +888,6 @@
         <div class="menu-card-header">
           <h3>Carta Primavera</h3>
           <p>Nuestra carta de temporada</p>
-        </div>
-        <div class="menu-card-body">
-          <div class="menu-preview">
-            <ul>
-              <li><span class="item-name">Bao de langostino</span><span>6 &euro;</span></li>
-              <li><span class="item-name">Steak tartar <em>NUEVO</em></span><span>18 &euro;</span></li>
-              <li><span class="item-name">Risotto de setas con foie</span><span>15 &euro;</span></li>
-              <li><span class="item-name">Presa ibérica del Valle de Los Pedroches</span><span>22 &euro;</span></li>
-              <li><span class="item-name">Entrecot de rubia vieja gallega</span><span>30 &euro;</span></li>
-            </ul>
-          </div>
         </div>
         <div class="menu-card-footer">
           <a id="link-primavera-es" href="#" target="_blank" class="menu-btn es loading">
@@ -924,17 +904,6 @@
         <div class="menu-card-header">
           <h3>Carta Tapas</h3>
           <p>Pequeñas delicias para compartir</p>
-        </div>
-        <div class="menu-card-body">
-          <div class="menu-preview">
-            <ul>
-              <li><span class="item-name">Gildas de anchoas</span><span>3 &euro;</span></li>
-              <li><span class="item-name">Torrezno al estilo soriano <em>NUEVO</em></span><span>3 &euro;</span></li>
-              <li><span class="item-name">Brioche de langostinos</span><span>5 &euro;</span></li>
-              <li><span class="item-name">Mini burguer con pan de churros</span><span>5 &euro;</span></li>
-              <li><span class="item-name">Mazamorra de almendras tiernas</span><span>5 &euro;</span></li>
-            </ul>
-          </div>
         </div>
         <div class="menu-card-footer">
           <a id="link-tapas-es" href="#" target="_blank" class="menu-btn es loading">
@@ -1459,37 +1428,7 @@
     patioText.position.set(0, 4.2, 0);
     patio.add(patioText);
 
-    // ---- SECOND BUILDING (hotel) behind the patio ----
-    const hotelGroup = new THREE.Group();
-    
-    // Hotel main building
-    const hotelBody = new THREE.Mesh(
-      new THREE.BoxGeometry(16, 5, 8),
-      whiteWallMat
-    );
-    hotelBody.position.set(0, 2.5, -PATIO_D / 2 - 5);
-    hotelBody.castShadow = true;
-    hotelBody.receiveShadow = true;
-    hotelGroup.add(hotelBody);
-
-    // Hotel roof
-    const roofGeo = new THREE.BoxGeometry(16.5, 0.3, 8.5);
-    const roof = new THREE.Mesh(roofGeo, terracottaMat);
-    roof.position.set(0, 5.15, -PATIO_D / 2 - 5);
-    hotelGroup.add(roof);
-
-    // Hotel windows (glowing)
-    const windowMat = new THREE.MeshStandardMaterial({ 
-      color: 0xffcc66, emissive: 0xffa030, emissiveIntensity: 0.5,
-      transparent: true, opacity: 0.7 
-    });
-    for (let i = -2; i <= 2; i++) {
-      const win = new THREE.Mesh(new THREE.PlaneGeometry(0.8, 1.2), windowMat);
-      win.position.set(i * 2.5, 3, -PATIO_D / 2 - 1.1);
-      hotelGroup.add(win);
-    }
-
-    patio.add(hotelGroup);
+    // ---- (Second building removed for performance) ----
 
     // ---- STARS IN THE SKY ----
     const starGeometry = new THREE.BufferGeometry();
